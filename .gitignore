@@ -1,4 +1,7 @@
 # 設定ファイル
 config.json
 # google drive 認証情報
-gen-lang-client-0842764253-0d509a3e8892.json
+gen-lang-client-*.json
+
+# システムファイル
+.DS_Store
