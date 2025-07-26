@@ -42,7 +42,7 @@
 
 4.  **Googleサービスアカウントキーの配置**
     -   Google Cloud Platformでサービスアカウントを作成し、キー（JSONファイル）をダウンロードします。
-    -   ダウンロードしたキーファイルの名前を `gen-lang-client-*.json` に変更し、プロジェクトのルートディレクトリに配置します。
+    -   ダウンロードしたキーファイルをブランチディレクトリ直下に格納してください。
     -   **重要**: このキーファイルには機密情報が含まれるため、Gitで管理しないでください。`.gitignore` にデフォルトで設定されています。
 
 5.  **Googleスプレッドシートの共有設定**
@@ -57,8 +57,9 @@
     {
         "login_id": "LATCHのログインID",
         "password": "LATCHのパスワード",
-        "upload_file_path": "アップロードするPDFのファイルパス (例: ./YYYY年MM月_勤務表.pdf)",
-        "spreadsheet_file_path": "スプレッドシートIDが記載されたJSONファイルへのパス (例: ./sheets.json)"
+        "upload_file_path": ["アップロードするPDFのファイルパス (例: ./YYYY年MM月_勤務表.pdf)"],
+        "spreadsheet_file_path": "スプレッドシートIDが記載されたJSONファイルへのパス (例: ./sheets.json)",
+        "service_account_file_path": "4で取得してgoogleサービスアカウントキーのファイルパス（例：./gen-lang-client-123456json）"
     }
     ```
     -   `upload_file_path` の `YYYY` と `MM` は、スクリプト実行時に現在の西暦と月に自動的に置き換えられます。

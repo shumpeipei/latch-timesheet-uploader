@@ -1,7 +1,10 @@
 {
     "login_id": "login_id",
     "password": "login_password",
-    "upload_file_path": "アップロードするファイルパス",
+    "upload_file_path": [
+        "アップロードするファイルパス1",
+        "アップロードするファイルパス2"
+    ],
     "spreadsheet_file_path": "スプレッドシートのIDが記載されたファイルパス",
     "service_account_file_path": "google driveの認証ファイルパス"
 }
