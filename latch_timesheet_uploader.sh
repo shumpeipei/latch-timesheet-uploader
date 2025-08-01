@@ -19,3 +19,12 @@ python download_pdf.py
 
 # latchのウェブサイトにログインし、PDFをアップロードする関数
 python web_login_latch_playwright.py
+
+# DLしたPDFを削除
+rm -f *.pdf
+# 削除できた場合にはメッセージを表示
+if [ $? -eq 0 ]; then
+    echo "PDFファイルの削除に成功しました。"
+else
+    echo "PDFファイルの削除に失敗しました。"
+fi
