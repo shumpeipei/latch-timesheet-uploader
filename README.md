@@ -4,8 +4,17 @@
 
 このプロジェクトは、Googleスプレッドシートで作成された勤務表をPDF形式でダウンロードし、勤怠管理システム「LATCH」に自動でアップロードするためのツールです。
 
-## 主な機能
+## 自動化フロー
+1. 勤怠テンプレートシートをもとに勤怠シート（現場、自社）を作成
+   - copySpreadsheetFromTemplate.jsを参照
+2. 勤怠入力
+   - 手入力
+3. 月末に「2」で作成した勤怠をPDFでローカルにDL
+   - download_pdf.pyを参照
+4. Latchに「3」でDLしたPDFをアップロード
+   - web_login_latch_playwright.pyを参照
 
+## 主な機能
 -   Google Drive上の指定されたスプレッドシートをPDFとしてダウンロードします。
 -   LATCHに自動でログインします。
 -   ダウンロードした勤務表（PDF）をLATCHの勤務表ページにアップロードします。
@@ -22,7 +31,10 @@
     -   `google-auth-oauthlib`
     -   `playwright`
 
-## セットアップ
+## セットアップ（自動化フロー1 勤務表の自動作成）
+1. 勤務表テンプレートのスプレッドシートのApps scriptに「copySpreadsheetFromTemplate.js」のソースを貼り付けて月次実行するようにスケジューリングする。
+
+## セットアップ（自動化フロー3,4 PDFダウンロード、latchアップロード）
 
 1.  **リポジトリのクローン**
     ```bash
