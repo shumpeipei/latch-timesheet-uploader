@@ -2,7 +2,7 @@
 
 ## 概要
 
-このプロジェクトは、Googleスプレッドシートで作成された勤務表をPDF形式でダウンロードし、勤怠管理システム「LATCH」に自動でアップロードするためのツールです。
+このプロジェクトは、Google スプレッドシートで作成された勤務表を PDF 形式でダウンロードし、勤怠管理システム「LATCH」に自動でアップロードするためのツールです。シェルスクリプト `latch_timesheet_uploader.sh` が PDF のダウンロード、LATCH へのアップロード、処理後の PDF の削除までを一括で行います。
 
 ## 自動化フロー
 1. 勤怠テンプレートシートをもとに勤怠シート（現場、自社）を作成
@@ -27,8 +27,7 @@
 -   以下のPythonライブラリ:
     -   `requests`
     -   `google-api-python-client`
-    -   `google-auth-httplib2`
-    -   `google-auth-oauthlib`
+    -   `google-auth`
     -   `playwright`
 
 ## セットアップ（自動化フロー1 勤務表の自動作成）
@@ -44,7 +43,7 @@
 
 2.  **Pythonライブラリのインストール**
     ```bash
-    pip install requests google-api-python-client google-auth-httplib2 google-auth-oauthlib playwright
+    pip install requests google-api-python-client google-auth playwright
     ```
 
 3.  **Playwrightのブラウザドライバをインストール**
@@ -69,18 +68,21 @@
     {
         "login_id": "LATCHのログインID",
         "password": "LATCHのパスワード",
-        "upload_file_path": ["アップロードするPDFのファイルパス (例: ./YYYY年MM月_勤務表.pdf)"],
-        "spreadsheet_file_path": "スプレッドシートIDが記載されたJSONファイルへのパス (例: ./sheets.json)",
-        "service_account_file_path": "4で取得してgoogleサービスアカウントキーのファイルパス（例：./gen-lang-client-123456json）"
+        "upload_file_path": [
+            "アップロードするPDFのファイルパス1 (例: ./YYYY年MM月_勤務表_現場.pdf)",
+            "アップロードするPDFのファイルパス2 (例: ./YYYY年MM月_勤務表_自社.pdf)"
+        ],
+        "spreadsheet_file_path": "スプレッドシートIDが記載されたJSONファイルへのパス (例: ./spreadsheet_ids.json)",
+        "service_account_file_path": "4で取得した Google サービスアカウントキーのファイルパス（例：./gen-lang-client-123456.json)"
     }
     ```
     -   `upload_file_path` の `YYYY` と `MM` は、スクリプト実行時に現在の西暦と月に自動的に置き換えられます。
 
 7.  **スプレッドシートIDファイルの作成**
-    -   `config.json` の `spreadsheet_file_path` で指定したパスに、ダウンロード対象のスプレッドシートIDを記載したJSONファイルを作成します。
+    -   `config.json` の `spreadsheet_file_path` で指定したパスに、ダウンロード対象のスプレッドシート ID を記載した JSON ファイルを作成します。`copySpreadsheetFromTemplate.js` を実行した場合は同じフォルダに `spreadsheet_ids.json` として出力されます。
     -   ファイルの中身は以下の形式で記述します。
 
-    **例 (`sheets.json`):**
+    **例 (`spreadsheet_ids.json`):**
     ```json
     [
         {
