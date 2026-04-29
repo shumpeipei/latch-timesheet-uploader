@@ -16,9 +16,19 @@
 
 # スプレッドシートからPDFを取得し、指定されたフォルダに保存する関数
 python download_pdf.py
+download_status=$?
+if [ $download_status -ne 0 ]; then
+    echo "PDFのダウンロードに失敗しました。処理を中断します。終了コード: $download_status"
+    exit $download_status
+fi
 
 # latchのウェブサイトにログインし、PDFをアップロードする関数
 python web_login_latch_playwright.py
+upload_status=$?
+if [ $upload_status -ne 0 ]; then
+    echo "LATCHへのPDFアップロードに失敗しました。処理を中断します。終了コード: $upload_status"
+    exit $upload_status
+fi
 
 # DLしたPDFを削除
 rm -f *.pdf
@@ -27,4 +37,5 @@ if [ $? -eq 0 ]; then
     echo "PDFファイルの削除に成功しました。"
 else
     echo "PDFファイルの削除に失敗しました。"
+    exit 1
 fi

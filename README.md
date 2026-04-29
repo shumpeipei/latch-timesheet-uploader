@@ -35,7 +35,6 @@
 1. 勤務表テンプレートのスプレッドシートのApps scriptに「copySpreadsheetFromTemplate.js」のソースを貼り付けて月次実行するようにスケジューリングする。
 
 ## セットアップ（自動化フロー3,4 PDFダウンロード、latchアップロード）
-
 1.  **リポジトリのクローン**
     ```bash
     git clone <repository_url>
