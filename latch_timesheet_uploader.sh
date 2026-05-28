@@ -14,8 +14,16 @@
 # 注意事項:
 #   実行前に必要な権限や環境設定を確認してください。
 
+# Playwrightブラウザバイナリを必要に応じてインストール（バイナリは~/Library/Caches/ms-playwrightに保存）
+uv run playwright install chromium
+playwright_status=$?
+if [ $playwright_status -ne 0 ]; then
+    echo "Playwrightブラウザのインストールに失敗しました。処理を中断します。終了コード: $playwright_status"
+    exit $playwright_status
+fi
+
 # スプレッドシートからPDFを取得し、指定されたフォルダに保存する関数
-python download_pdf.py
+uv run python download_pdf.py
 download_status=$?
 if [ $download_status -ne 0 ]; then
     echo "PDFのダウンロードに失敗しました。処理を中断します。終了コード: $download_status"
@@ -23,7 +31,7 @@ if [ $download_status -ne 0 ]; then
 fi
 
 # latchのウェブサイトにログインし、PDFをアップロードする関数
-python web_login_latch_playwright.py
+uv run python web_login_latch_playwright.py
 upload_status=$?
 if [ $upload_status -ne 0 ]; then
     echo "LATCHへのPDFアップロードに失敗しました。処理を中断します。終了コード: $upload_status"

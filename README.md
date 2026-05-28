@@ -21,15 +21,11 @@
 
 ## 必要なもの
 
--   Python 3
+-   [uv](https://docs.astral.sh/uv/)（Pythonパッケージ管理）
 -   Bash
 -   Google Cloud Platformのサービスアカウント
--   以下のPythonライブラリ:
-    -   `requests`
-    -   `google-api-python-client`
-    -   `google-auth-httplib2`
-    -   `google-auth-oauthlib`
-    -   `playwright`
+
+> 依存ライブラリ（`requests`, `google-api-python-client`, `google-auth-httplib2`, `playwright` 等）は `pyproject.toml` で管理されており、`uv sync` で一括インストールできます。
 
 ## セットアップ（自動化フロー1 勤務表の自動作成）
 1. 勤務表テンプレートのスプレッドシートのApps scriptに「copySpreadsheetFromTemplate.js」のソースを貼り付けて月次実行するようにスケジューリングする。
@@ -41,15 +37,18 @@
     cd latch_timesheet_uploader
     ```
 
-2.  **Pythonライブラリのインストール**
+2.  **依存ライブラリのインストール**
     ```bash
-    pip install requests google-api-python-client google-auth-httplib2 google-auth-oauthlib playwright
+    uv sync
     ```
+    仮想環境（`.venv`）が自動作成され、`pyproject.toml` に定義されたライブラリがインストールされます。
 
 3.  **Playwrightのブラウザドライバをインストール**
     ```bash
-    playwright install
+    uv run playwright install chromium
     ```
+    ブラウザバイナリは `~/Library/Caches/ms-playwright/` に保存され、全プロジェクトで共有されます。
+    シェルスクリプト実行時にも自動で実行されるため、初回以降は手動実行不要です。
 
 4.  **Googleサービスアカウントキーの配置**
     -   Google Cloud Platformでサービスアカウントを作成し、キー（JSONファイル）をダウンロードします。

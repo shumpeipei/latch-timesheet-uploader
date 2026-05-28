@@ -5,3 +5,6 @@ gen-lang-client-*.json
 
 # システムファイル
 .DS_Store
+
+# インストール先
+.venv
