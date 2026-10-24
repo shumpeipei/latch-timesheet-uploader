@@ -2,6 +2,7 @@
 config.json
 # google drive 認証情報
 gen-lang-client-*.json
+google-service-account.json
 
 # システムファイル
 .DS_Store
