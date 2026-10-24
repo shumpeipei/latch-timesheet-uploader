@@ -55,40 +55,30 @@
     -   ダウンロードしたキーファイルをブランチディレクトリ直下に格納してください。
     -   **重要**: このキーファイルには機密情報が含まれるため、Gitで管理しないでください。`.gitignore` にデフォルトで設定されています。
 
-5.  **Googleスプレッドシートの共有設定**
-    -   ダウンロードしたいGoogleスプレッドシートを開き、共有設定でサービスアカウントのメールアドレス（キーファイル内に記載されています）に「閲覧者」以上の権限を与えます。
+5.  **Google Driveフォルダの共有設定**
+    -   勤務表スプレッドシートが格納されているGoogle Driveの親フォルダを開き、共有設定でサービスアカウントのメールアドレス（キーファイル内に記載されている `client_email`）に「閲覧者」以上の権限を与えます。
+    -   親フォルダに権限を付与することで、毎月新しく作成されるスプレッドシートにも自動的に閲覧権限が引き継がれます。
 
 6.  **設定ファイルの作成**
     -   `config_template.json` をコピーして `config.json` という名前のファイルを作成します。
-    -   `config.json` を開き、各項目を自分の情報に合わせて編集します。
+    -   `config.json` を開き、各項目を編集します。
 
     **`config.json` の内容:**
     ```json
     {
         "login_id": "LATCHのログインID",
         "password": "LATCHのパスワード",
-        "upload_file_path": ["アップロードするPDFのファイルパス (例: ./YYYY年MM月_勤務表.pdf)"],
-        "spreadsheet_file_path": "スプレッドシートIDが記載されたJSONファイルへのパス (例: ./sheets.json)",
-        "service_account_file_path": "4で取得してgoogleサービスアカウントキーのファイルパス（例：./gen-lang-client-123456json）"
+        "upload_file_path": [
+            "./【BL】名前_現場勤務表_YYYY年MM月分_現場.pdf",
+            "./【BL】名前_現場勤務表_YYYY年MM月分_自社.pdf"
+        ],
+        "drive_folder_id": "Google Drive上の勤務表保存フォルダID",
+        "service_account_file_path": "./google-service-account.json"
     }
     ```
-    -   `upload_file_path` の `YYYY` と `MM` は、スクリプト実行時に現在の西暦と月に自動的に置き換えられます。
-
-7.  **スプレッドシートIDファイルの作成**
-    -   `config.json` の `spreadsheet_file_path` で指定したパスに、ダウンロード対象のスプレッドシートIDを記載したJSONファイルを作成します。
-    -   ファイルの中身は以下の形式で記述します。
-
-    **例 (`sheets.json`):**
-    ```json
-    [
-        {
-            "fileId": "ここに1つ目のスプレッドシートID"
-        },
-        {
-            "fileId": "ここに2つ目のスプレッドシートID"
-        }
-    ]
-    ```
+    -   `drive_folder_id`: 勤務表が格納されているGoogle DriveフォルダのID（URL `drive.google.com/drive/folders/<FOLDER_ID>` の `<FOLDER_ID>` 部分）を指定します。API経由で当月のスプレッドシートを自動検索するため、毎月IDを更新する必要はありません。
+    -   `upload_file_path`: `YYYY` と `MM` は、スクリプト実行時に現在の西暦と月に自動置換されます。ここに指定されたタイトル（`.pdf` を除いた名前）に一致するスプレッドシートをDrive上から自動特定します。
+    -   ※ 従来通り `spreadsheet_file_path`（`sheets.json` 形式）を指定してIDを直接指定することも可能です（`drive_folder_id` 未指定時のフォールバック動作）。
 
 ## 使用方法
 
