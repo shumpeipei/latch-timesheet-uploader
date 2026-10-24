@@ -1,10 +1,10 @@
 {
-    "login_id": "login_id",
-    "password": "login_password",
+    "login_id": "LATCHのログインID",
+    "password": "LATCHのパスワード",
     "upload_file_path": [
-        "アップロードするファイルパス1",
-        "アップロードするファイルパス2"
+        "./【BL】名前_現場勤務表_YYYY年MM月分_現場.pdf",
+        "./【BL】名前_現場勤務表_YYYY年MM月分_自社.pdf"
     ],
-    "spreadsheet_file_path": "スプレッドシートのIDが記載されたファイルパス",
-    "service_account_file_path": "google driveの認証ファイルパス"
+    "drive_folder_id": "Google Drive上の勤務表保存フォルダID",
+    "service_account_file_path": "./google-service-account.json"
 }
